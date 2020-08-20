@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<string> ans;
+    map<char,string> m;
+    void per(string d,int l,int r,string s)
+    {
+        if(l>=r)
+        {
+            if(s.length()==r)
+                ans.push_back(s);
+            return ;
+        }
+        for(int j=0;j<m[d[l]].length();j++)
+        {
+            per(d,l+1,r,s+m[d[l]][j]);   
+        }
+    }
+    vector<string> letterCombinations(string d) 
+    {
+        int n=d.length();
+        m['2']="abc";
+        m['3']="def";
+        m['4']="ghi";
+        m['5']="jkl";
+        m['6']="mno";
+        m['7']="pqrs";
+        m['8']="tuv";
+        m['9']="wxyz";
+        if(n==0)
+            return {};
+        per(d,0,n,"");
+        return ans;
+    }
+};
+

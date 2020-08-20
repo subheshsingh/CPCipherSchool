@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int fib(int N) {
+        if (N < 2)
+            return N;
+        int prev=1, prev2=0,res;
+        for (int i=2; i<=N; i++)
+        {
+            res = prev + prev2;
+            prev2 = prev;
+            prev = res;
+        }
+        return res;
+    }
+};
+

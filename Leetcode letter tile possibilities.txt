@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int numTilePossibilities(string tiles) {
+        int n = tiles.size();
+        sort(tiles.begin(), tiles.end());
+        vector<int> perm(9,1);
+        
+        // store all the factorials till 8!
+        for(int i=2; i<9; i++) {
+            perm[i] = perm[i-1]*i;
+        }
+        int al = pow(2, n);
+        int ans = 0;
+        
+        // keeping track of seen permutations
+        map<string, bool> seen;
+        
+        for(int i=1; i<al; i++) {
+            string tmp = "";
+            vector<int> freq(27, 0);
+            for(int j=0; j<n; j++) {
+                if (i & (1<<j)) {
+                    // setbit elements to be taken
+                    freq[tiles[j]-'A']++;
+                    tmp += tiles[j];
+                }
+            }
+            if (!seen[tmp]) {
+                // add to the answer (len(tmp)!) / (freq[A]! * freq[B]!...)
+                seen[tmp] = true;
+                int curr = perm[tmp.size()];
+                for(auto &z: freq) {
+                    curr /= perm[z];
+                }
+                ans += curr;
+            }
+        }
+        return ans;
+    }
+};
+
